@@ -1,16 +1,12 @@
-import { StyleSheet, Text, View ,Button,Alert} from 'react-native'
-import React,{useState} from 'react'
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import { Alert } from "react-native";
+import React,{useState} from "react";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import RazorpayCheckout from 'react-native-razorpay';
 import axios from "axios";
-const BACKEND_API_URL="https://demopaymentbackend.onrender.com";
-const App = () => {
-  
+const BACKEND_API_URL="";
+async function CreateOrder(){
     const[loading,setLoading] = useState(false);
     const[currentOrderId,setCurrentOrderId] = useState(null);
- async function handle(){
-    console.log("payment triggered")
-   
     // const body = {receiptName:}
     const currentUserName = "Goutham" //getUsername dynamically
     const body = {receiptName : currentUserName};
@@ -33,12 +29,12 @@ const App = () => {
           await AsyncStorage.setItem("currentOrderId1",currentOrderId);
         }
           setTimeOutFunction();
-          const thresholdAmount = 1;
+          const thresholdAmount = 1000;
           var options = {
             description: 'Demo Payment App',
             image: require("./assets/icon.png"),
             currency: 'INR',
-            key: 'rzp_live_skILbMCh8fRbku',
+            key: 'rzp_live_J89zrEvhSQ2i1m',
             amount: thresholdAmount*100,
             name: 'Demo App',
             order_id: response.data.id,//Replace this with an order_id created using Orders API.
@@ -71,22 +67,5 @@ const App = () => {
       } catch (error) {
         return Alert.alert("Error Occurred",error.message)
       }
-  }
-  return (
-    <View style={styles.container}>
-      <Text>App</Text>
-      {loading ? <Text>Loading</Text> : <Text></Text>}
-      <Button onPress={()=>handle()} title="Paynow"/>
-    </View>
-  )
-}
-
-export default App
-
-const styles = StyleSheet.create({
-  container:{
-    flex:1,
-    justifyContent:"center",
-    alignItems:'center'
-  }
-})
+  
+    }
